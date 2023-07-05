@@ -542,7 +542,7 @@ class Tensor:
   def hardswish(self): return self * (self+3).relu6() * (1/6)
   def tanh(self): return 2.0 * ((2.0 * self).sigmoid()) - 1.0
   def hardtanh(self, min_val=-1, max_val=1): return self.clip(min_val, max_val)
-  def gelu(self): return 0.5 * self * (1 + (self * 0.7978845608 * (1 + 0.044715 * self * self)).tanh())
+  def gelu(self): return 0.5 * self * (1 + (self * 0.797884560802865 * (1 + 0.044715 * self * self)).tanh())
   def quick_gelu(self): return self * (self * 1.702).sigmoid()
   def leakyrelu(self, neg_slope=0.01): return self.relu() - (-neg_slope*self).relu()
   def mish(self): return self * self.softplus().tanh()
