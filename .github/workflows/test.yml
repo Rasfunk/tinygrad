@@ -192,10 +192,14 @@ jobs:
         key: metalwebgpu
     - name: Install Dependencies
       run: pip install -e '.[metal,webgpu,testing]' --extra-index-url https://download.pytorch.org/whl/cpu
+    - name: Get System information
+      run: system_profiler SPSoftwareDataType SPHardwareDataType SPDisplaysDataType
     - name: Test LLaMA compile speed
       run: PYTHONPATH="." METAL=1 python3 test/external/external_test_speed_llama.py
     #- name: Run dtype test
     #  run: DEBUG=4 METAL=1 python -m pytest test/test_dtype.py
+    - name: Run ops test
+      run: PRINT_TENSORS=1 DEBUG=4 METAL=1 python -m pytest -s test/test_ops.py -k "test_gelu"
     # dtype test has issues on test_half_to_int8
     - name: Run metal ops test
       run: DEBUG=2 METAL=1 python -m pytest test/test_ops.py
